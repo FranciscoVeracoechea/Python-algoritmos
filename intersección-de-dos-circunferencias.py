@@ -1,6 +1,7 @@
 #http://www.solveet.com/exercises/Circunferencias/181/solution-1286
 #https://trinket.io/python3/3a287946dd
 from math import sqrt
+import numpy
 import matplotlib.pyplot as plt
 import sys
 error = True
@@ -22,7 +23,7 @@ def poly2(a,b,c):
         else:     
             x1 = complex((-b + sqrt(((b**2) - (4*a*c)))) / (2*a))
             x2 = complex((-b - sqrt(((b**2) - (4*a*c)))) / (2*a))
-    return [x1, x2] 
+    return [round(numpy.real(x1)), round(numpy.real(x2))] 
 
 print("Ingrese las cooordenasdas de 2 circunferencias")
 
@@ -61,9 +62,8 @@ while error:
           puntoY = poly2(A, B, C)
           puntoX = []
           
-          for y in puntoY: 
-              puntoX.append(complex((-F-2*y*(b2-b1))/(2*(a2-a1))))
-              
+          for y in puntoY:
+              puntoX.append(round(numpy.real((-F-2*y*(b2-b1))/(2*(a2-a1)))), 2)
           
          
           print("Puntos de corte ("+str(puntoX[0])+", "+str(puntoY[0])+") y ("+str(puntoX[1])+", "+str(puntoY[1])+")")
