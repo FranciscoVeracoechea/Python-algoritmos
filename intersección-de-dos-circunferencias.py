@@ -1,5 +1,6 @@
 #http://www.solveet.com/exercises/Circunferencias/181/solution-1286
 #https://trinket.io/python3/3a287946dd
+#https://trinket.io/python3/9fb454ac4b
 from math import sqrt
 import numpy
 import matplotlib.pyplot as plt
