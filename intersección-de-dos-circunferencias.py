@@ -43,8 +43,7 @@ while error:
         #La condición para que sea secante. 
         if (r1 + r2 >= DISTANCIA): 
           # Tras igualar ambas ecuaciones, queda una recta con término 
-          # independiente F y, una vez despejada una incógnita (x) y sustituyendo, 
-          # queda: Ay²+By+C = 0 
+          # independiente A y, una vez despejada una incógnita (x) y sustituyendo,
           A = (r1*r1 - r2*r2 + DISTANCIA*DISTANCIA)/(2*DISTANCIA)
           h = sqrt(r1*r1 - A*A);
           
@@ -59,15 +58,21 @@ while error:
           x4 = puntoR[0] - h*(b2 - b1)/DISTANCIA
           y4 = puntoR[1] + h*(a2 - a1)/DISTANCIA
        
+          if [x3,y3] == [x4,y4]:
+            print("Solo se tocan en un puto ("+ str(x3) +", "+str(y3)+")")
+            circle1 = plt.Circle([a1, b1], r1, color='green', linewidth=2, label="C1", fill=False)
+            circle2 = plt.Circle([a2, b2], r2, color='blue', linewidth=2, label="C2", fill=False)
+            ax = plt.gca()
          
-          print("Puntos de corte ("+str(x3)+", "+str(y3)+") y ("+str(x4)+", "+str(y4)+")")
-          circle1 = plt.Circle([a1, b1], r1, color='green', linewidth=2, label="C1", fill=False)
-          circle2 = plt.Circle([a2, b2], r2, color='blue', linewidth=2, label="C2", fill=False)
-          ax = plt.gca()
-          ax.plot([x3, x4], [y3, y4], "r-", linewidth=2, label="P.I.")
-
-          ax.legend(loc='upper left')
-          error = False
+          else:
+            print("Puntos de corte ("+str(x3)+", "+str(y3)+") y ("+str(x4)+", "+str(y4)+")")
+            circle1 = plt.Circle([a1, b1], r1, color='green', linewidth=2, label="C1", fill=False)
+            circle2 = plt.Circle([a2, b2], r2, color='blue', linewidth=2, label="C2", fill=False)
+            ax = plt.gca()
+            ax.plot([x3, x4], [y3, y4], "r-", linewidth=2, label="P.I.")
+  
+            ax.legend(loc='upper left')
+            error = False
           
         else:
           print("Las circunferencias no se cruzan")
