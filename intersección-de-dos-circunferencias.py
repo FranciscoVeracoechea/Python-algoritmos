@@ -1,4 +1,5 @@
 #http://www.solveet.com/exercises/Circunferencias/181/solution-1286
+#https://trinket.io/python3/3a287946dd
 from math import sqrt
 import matplotlib.pyplot as plt
 import sys
@@ -19,8 +20,8 @@ def poly2(a,b,c):
             x1 = complex(((-b) / (2*a)), sqrt(-((b**2) - (4*a*c))) / (2*a))  
             x2 = complex(((-b) / (2*a)), - sqrt(-((b**2) - (4*a*c))) / (2*a)) 
         else:     
-            x1 = (-b + sqrt(((b**2) - (4*a*c)))) / (2*a) 
-            x2 = (-b - sqrt(((b**2) - (4*a*c)))) / (2*a) 
+            x1 = complex((-b + sqrt(((b**2) - (4*a*c)))) / (2*a))
+            x2 = complex((-b - sqrt(((b**2) - (4*a*c)))) / (2*a))
     return [x1, x2] 
 
 print("Ingrese las cooordenasdas de 2 circunferencias")
@@ -61,7 +62,8 @@ while error:
           puntoX = []
           
           for y in puntoY: 
-              puntoX.append((-F-2*y*(b2-b1))/(2*(a2-a1)))
+              puntoX.append(complex((-F-2*y*(b2-b1))/(2*(a2-a1))))
+              
           
          
           print("Puntos de corte ("+str(puntoX[0])+", "+str(puntoY[0])+") y ("+str(puntoX[1])+", "+str(puntoY[1])+")")
@@ -71,6 +73,11 @@ while error:
           plt.plot(puntoX, puntoY, "r-", linewidth=2, label="P.I.")
           error = False
           
+        else:
+          print("Las circunferencias no se cruzan")
+          circle1 = plt.Circle([a1, b1], r1, color='green', linewidth=2, label="C1", fill=False)
+          circle2 = plt.Circle([a2, b2], r2, color='blue', linewidth=2, label="C2", fill=False)
+          error = False
       else:
         print("Error divición entre cero, no se puede calcular punto de intersección")
         
