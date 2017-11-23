@@ -23,7 +23,7 @@ def poly2(a,b,c):
         else:     
             x1 = complex((-b + sqrt(((b**2) - (4*a*c)))) / (2*a))
             x2 = complex((-b - sqrt(((b**2) - (4*a*c)))) / (2*a))
-    return [round(numpy.real(x1)), round(numpy.real(x2))] 
+    return [round(numpy.real(x1),2), round(numpy.real(x2), 2)] 
 
 print("Ingrese las cooordenasdas de 2 circunferencias")
 
