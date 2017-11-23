@@ -63,6 +63,7 @@ while error:
             circle1 = plt.Circle([a1, b1], r1, color='green', linewidth=2, label="C1", fill=False)
             circle2 = plt.Circle([a2, b2], r2, color='blue', linewidth=2, label="C2", fill=False)
             ax = plt.gca()
+            error = False
          
           else:
             print("Puntos de corte ("+str(x3)+", "+str(y3)+") y ("+str(x4)+", "+str(y4)+")")
