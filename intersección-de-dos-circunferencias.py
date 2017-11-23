@@ -23,7 +23,10 @@ def poly2(a,b,c):
         else:     
             x1 = complex((-b + sqrt(((b**2) - (4*a*c)))) / (2*a))
             x2 = complex((-b - sqrt(((b**2) - (4*a*c)))) / (2*a))
-    return [round(numpy.real(x1),2), round(numpy.real(x2), 2)] 
+            
+        x1 = numpy.real(x1)
+        x2 = numpy.real(x2)
+    return [x1, x2] 
 
 print("Ingrese las cooordenasdas de 2 circunferencias")
 
@@ -63,20 +66,23 @@ while error:
           puntoX = []
           
           for y in puntoY:
-              puntoX.append(round(numpy.real((-F-2*y*(b2-b1))/(2*(a2-a1)))), 2)
+              puntoX.append(numpy.real((-F-2*y*(b2-b1))/(2*(a2-a1))))
           
          
-          print("Puntos de corte ("+str(puntoX[0])+", "+str(puntoY[0])+") y ("+str(puntoX[1])+", "+str(puntoY[1])+")")
-          
+          print("Puntos de corte ("+str(puntoX[0])+", "+str(puntoX[1])+") y ("+str(puntoX[1])+", "+str(puntoY[1])+")")
           circle1 = plt.Circle([a1, b1], r1, color='green', linewidth=2, label="C1", fill=False)
           circle2 = plt.Circle([a2, b2], r2, color='blue', linewidth=2, label="C2", fill=False)
-          plt.plot(puntoX, puntoY, "r-", linewidth=2, label="P.I.")
+          ax = plt.gca()
+          ax.plot([puntoX[0], puntoY[0]], [puntoX[1], puntoY[1]], "r-", linewidth=2, label="P.I.")
+
+          ax.legend(loc='upper left')
           error = False
           
         else:
           print("Las circunferencias no se cruzan")
           circle1 = plt.Circle([a1, b1], r1, color='green', linewidth=2, label="C1", fill=False)
           circle2 = plt.Circle([a2, b2], r2, color='blue', linewidth=2, label="C2", fill=False)
+          ax = plt.gca()
           error = False
       else:
         print("Error divición entre cero, no se puede calcular punto de intersección")
@@ -86,7 +92,7 @@ while error:
     print ("Dato no valido... ingrese solo números")
     error = True
     
-fig, ax = plt.subplots()
+
 
 ax.add_artist(circle1)
 ax.add_artist(circle2)
@@ -98,7 +104,7 @@ ax.set_xlim((-20, 20))
 ax.set_ylim((-20, 20))
 
 plt.grid(True)
-plt.legend(loc='upper left')
+
 
 plt.show()
 sys.exit(0)
