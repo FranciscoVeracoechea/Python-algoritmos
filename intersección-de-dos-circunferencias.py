@@ -6,27 +6,15 @@ import matplotlib.pyplot as plt
 import sys
 error = True
 
-def poly2(a,b,c): 
-    if a == 0: # Si a es 0 se trata de un polinomio de 1er grado. 
-        if b == 0: # Comprobamos que el luser no ha introducido un término independiente. 
-            x1 = c # Si es así, pues el resultado será el propio término. 
-            x2 = None 
-        else: 
-            c = float(c) # Convertimos una variable a flotante para evitar malos resultados si b y c son enteros. 
-            x1 = (-c) / b 
-            x2 = None 
-    else: 
-        # Comprobamos que el signo del discriminante para determinar la naturaleza de las raíces. 
-        if ((b**2) - (4*a*c)) < 0: 
-            x1 = complex(((-b) / (2*a)), sqrt(-((b**2) - (4*a*c))) / (2*a))  
-            x2 = complex(((-b) / (2*a)), - sqrt(-((b**2) - (4*a*c))) / (2*a)) 
-        else:     
-            x1 = complex((-b + sqrt(((b**2) - (4*a*c)))) / (2*a))
-            x2 = complex((-b - sqrt(((b**2) - (4*a*c)))) / (2*a))
-            
-        x1 = numpy.real(x1)
-        x2 = numpy.real(x2)
-    return [x1, x2] 
+def resta(x1,y1,x2,y2):
+  return [x1 - x2 , y1 - y2]
+    
+def suma(x1,y1,x2,y2):
+  return [x1 + x2, y1 + y2]
+        
+def escala(x,y,s):
+  return [x*s, y*s]
+
 
 print("Ingrese las cooordenasdas de 2 circunferencias")
 
@@ -50,30 +38,33 @@ while error:
       
       if a2-a1 != 0 or b2-b1 != 0:
         #Calculamos la distancia entre centros. 
-        DISTANCE = sqrt((a2 - a1)**2 + (b2-b1)**2)
+        DISTANCIA = sqrt((a2 - a1)**2 + (b2-b1)**2)
         
         #La condición para que sea secante. 
-        if (r1 + r2 >= DISTANCE): 
+        if (r1 + r2 >= DISTANCIA): 
           # Tras igualar ambas ecuaciones, queda una recta con término 
           # independiente F y, una vez despejada una incógnita (x) y sustituyendo, 
           # queda: Ay²+By+C = 0 
-          F = (a1)**2+(b1)**2-(r1)**2-(a2)**2-(b2)**2+(r2)**2 
-          A = (2*(b2-b1)**2)/(a2-a1)-1 
-          B = 2*F*(b2-b1)/(a2-a1)-2*b2
-          C = a1**2+b2**2-r2**2+(F**2/(2*(a2-a1)))
+          A = (r1*r1 - r2*r2 + DISTANCIA*DISTANCIA)/(2*DISTANCIA)
+          h = sqrt(r1*r1 - A*A);
           
-          puntoY = poly2(A, B, C)
-          puntoX = []
+          puntoR = []
           
-          for y in puntoY:
-              puntoX.append(numpy.real((-F-2*y*(b2-b1))/(2*(a2-a1))))
+          punto = resta(a1,b1,a2,b2)
+          punto2 = escala(punto[0], punto[1], -A/DISTANCIA)
+          puntoR = suma(punto2[0], punto2[1], a1, b1)
           
+          x3 = puntoR[0] + h*(b2 - b1)/DISTANCIA
+          y3 = puntoR[1] - h*(a2 - a1)/DISTANCIA
+          x4 = puntoR[0] - h*(b2 - b1)/DISTANCIA
+          y4 = puntoR[1] + h*(a2 - a1)/DISTANCIA
+       
          
-          print("Puntos de corte ("+str(puntoX[0])+", "+str(puntoX[1])+") y ("+str(puntoX[1])+", "+str(puntoY[1])+")")
+          print("Puntos de corte ("+str(x3)+", "+str(y3)+") y ("+str(x4)+", "+str(y4)+")")
           circle1 = plt.Circle([a1, b1], r1, color='green', linewidth=2, label="C1", fill=False)
           circle2 = plt.Circle([a2, b2], r2, color='blue', linewidth=2, label="C2", fill=False)
           ax = plt.gca()
-          ax.plot([puntoX[0], puntoY[0]], [puntoX[1], puntoY[1]], "r-", linewidth=2, label="P.I.")
+          ax.plot([x3, x4], [y3, y4], "r-", linewidth=2, label="P.I.")
 
           ax.legend(loc='upper left')
           error = False
